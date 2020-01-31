@@ -133,7 +133,23 @@ const getProblemByAreaID = async (areaid) => {
             'content-type': 'application/json',
         },
     })
-    const query = ``
+    const query = `query MyQuery {
+        problems(where: {areaid: {_eq: "${areaid}"}}) {
+            areaid
+            citizen_id
+            department
+            description
+            downvote
+            digiSignature_Count
+            id
+            image_url
+            originTime
+            resolveTime
+            status
+            title
+            upvote
+        }
+    }`
     
     let result = await client.request(query)
         .then(data => { return data })
