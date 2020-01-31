@@ -23,7 +23,6 @@ router.route('/insertUser')
 
         // Processing
         let resp = await gql.insertUser(phoneNumber, password, name, email, area);
-
         return res.json({
             error: false,
             success: true,
@@ -93,7 +92,7 @@ router.route('/insertProblem')
         }
 
         // Processing
-        let resp = await gql.insertProblem(areaid, department, image_url, description, title, areaid, userid);
+        let resp = await gql.insertProblem(areaid, department, image_url, description, title, userid);
         
         return res.json({
             error: false,
@@ -103,7 +102,7 @@ router.route('/insertProblem')
     });
 
 router.route('/getProblem')
-    .post(async (req, res) => {
+    .get(async (req, res) => {
         
         // Processing
         let resp = await gql.getProblem();
@@ -157,9 +156,7 @@ router.route('/getProblemByUser')
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: resp,
         });
     });
 
@@ -200,9 +197,12 @@ router.route('/upvoteProblem')
         }
 
         // Processing
-        let upvotes = await gql.fetchUpvoteProblem(problemid);
-        let resp = await gql.upvoteProblem(problemid, upvotes+1);
-        
+        let upvotes = await gql.fetchUpvoteProblem(parseInt(problemid));
+        let resp = [];
+        if(upvotes.problems) {
+            resp = await gql.upvoteProblem(problemid, upvotes.problems[0].upvote+1);
+        }
+
         return res.json({
             error: false,
             success: true,
@@ -224,8 +224,12 @@ router.route('/downvoteProblem')
         }
 
         // Processing
-        let downvotes = await gql.fetchDownvoteProblem(problemid);
-        let resp = await gql.downvoteProblem(problemid, downvotes+1);
+        let downvotes = await gql.fetchDownvoteProblem(parseInt(problemid));
+        console.log(downvotes)
+        let resp = [];
+        if(downvotes.problems) {
+            resp = await gql.downvoteProblem(problemid, downvotes.problems[0].downvote+1);
+        }
         
         return res.json({
             error: false,
@@ -287,9 +291,9 @@ router.route('/digiSignProblem')
 router.route('/insertOfficial')
     .post(async (req, res) => {
         
-        let { name, password, email, phone, department, area } = req.body;
+        let { name, password, email, phone, department, areaid } = req.body;
         
-        if(!(name, password, email, phone, department, area)) {
+        if(!(name, password, email, phone, department, areaid)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -298,7 +302,7 @@ router.route('/insertOfficial')
         }
 
         // Processing
-        let resp = await gql.insertOfficial(name, password, email, phone, department, area);
+        let resp = await gql.insertOfficial(name, password, email, phone, department, areaid);
         
         return res.json({
             error: false,

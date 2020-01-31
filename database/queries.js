@@ -277,7 +277,7 @@ const fetchUpvoteProblem = async (problemid) => {
     return result
 };
 
-const downvoteProblem = async (problemid) => {
+const downvoteProblem = async (problemid, incrementedDownvote) => {
     const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
             'content-type': 'application/json',
@@ -285,10 +285,10 @@ const downvoteProblem = async (problemid) => {
     })
     const query = `mutation MyMutation {
         __typename
-        update_problems(where: {id: {_eq: "${problemid}"}}, _set: {downvote: "${incrementedUpvote}"}) {
+        update_problems(where: {id: {_eq: "${problemid}"}}, _set: {downvote: "${incrementedDownvote}"}) {
             affected_rows
             returning {
-                upvote
+                downvote
             }
         }
     }`
@@ -346,7 +346,7 @@ const digiSignProblem = async (problemid) => {
     return result
 };
 
-const insertOfficial = async (areaid, name, password, email, phone, department) => {
+const insertOfficial = async (name, password, email, phone, department, areaid) => {
     const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
             'content-type': 'application/json',
@@ -379,7 +379,7 @@ const getOfficialPassword = async (email) => {
     })
     const query = `query MyQuery {
         __typename
-        govtOfficials(where: {email: {_eq: ""}}) {
+        govtOfficials(where: {email: {_eq: "${email}"}}) {
             password
         }
     }`
@@ -420,6 +420,7 @@ const getOfficialByArea = async (areaid) => {
 exports.insertUser = insertUser
 exports.getUserByEmail = getUserByEmail
 exports.getUserPassword = getUserPassword
+exports.insertProblem = insertProblem
 exports.getProblem = getProblem
 exports.getProblemByAreaID = getProblemByAreaID
 exports.getProblemByUser = getProblemByUser
