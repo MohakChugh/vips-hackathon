@@ -263,13 +263,40 @@ const downvoteProblem = async (problemid) => {
             'content-type': 'application/json',
         },
     })
-    const query = ``
+    const query = `mutation MyMutation {
+        __typename
+        update_problems(where: {id: {_eq: "${problemid}"}}, _set: {downvote: "${incrementedUpvote}"}) {
+            affected_rows
+            returning {
+                upvote
+            }
+        }
+    }`
     
     let result = await client.request(query)
         .then(data => { return data })
         .catch((err) => { return err })
     return result
 };
+
+const fetchDownvoteProblem = async (problemid) => {
+    const client = new GraphQLClient('', {
+        headers: {
+            'content-type': 'application/json',
+        },
+    })
+    const query = `query MyQuery {
+        problems(where: {id: {_eq: "${problemid}"}}) {
+            downvote
+        }
+    }`
+    
+    let result = await client.request(query)
+        .then(data => { return data })
+        .catch((err) => { return err })
+    return result
+};
+
 
 const deleteProblem = async (problemid) => {
     const client = new GraphQLClient('', {
