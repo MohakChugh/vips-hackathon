@@ -50,13 +50,17 @@ const getUserByEmail = async (email) => {
     return result
 };
 
-const getUserPassword = async (data) => {
+const getUserPassword = async (email) => {
     const client = new GraphQLClient('', {
         headers: {
             'content-type': 'application/json',
         },
     })
-    const query = ``
+    const query = `query MyQuery {
+        user(where: {email: {_eq: "${email}"}}) {
+                password
+        }
+    }`
     
     let result = await client.request(query)
         .then(data => { return data })
@@ -64,13 +68,26 @@ const getUserPassword = async (data) => {
     return result
 };
 
-const insertProblem = async (description, title, areaid, userid) => {
+const insertProblem = async (areaid, department, image_url, description, title, areaid, userid) => {
     const client = new GraphQLClient('', {
         headers: {
             'content-type': 'application/json',
         },
     })
-    const query = ``
+    const query = `mutation MyMutation {
+        __typename
+        insert_problems(objects: {
+            areaid: "${areaid}", 
+            citizen_id: "${userid}", 
+            department: "${department}", 
+            description: "${description}", 
+            image_url: "${image_url}", 
+            status: "Submitted", 
+            title: "${title}", 
+            }) {
+            affected_rows
+        }
+    }`
     
     let result = await client.request(query)
         .then(data => { return data })
