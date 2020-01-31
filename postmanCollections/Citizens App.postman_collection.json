@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c913a7c4-7c3d-4cc5-bd71-f7dde2510bc1",
+		"_postman_id": "74a42ed0-fdca-4da3-a251-7fd4c8decb2a",
 		"name": "Citizens App",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -521,6 +521,94 @@
 					"port": "8080",
 					"path": [
 						"getOfficialByArea"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/digiSignProblem",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "810ed618-040d-471d-86f8-7f276f2555cd",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {",
+							"    console.log(response.json());",
+							"});",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"Created\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "mohakchugh@gmail.com",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "testtesttest",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "Mohak Chugh 2",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI1ZTJhZDQyNzAxMzE1NzJiZWI1OGQyODYiLCJpYXQiOjE1Nzk4NjUxNTcsImV4cCI6MTU4MDQ2OTk1N30.D-ps3KTjmakPAs8WM5jucsca9DR8UYr5QVVh8TxGwWU",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "problemid",
+							"value": "2345678",
+							"type": "text"
+						},
+						{
+							"key": "userid",
+							"value": "456789",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/digiSignProblem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"digiSignProblem"
 					]
 				}
 			},
