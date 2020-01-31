@@ -9,7 +9,11 @@ const insertUser = async (phoneNumber, password, name, email, area) => {
     })
     const query = `mutation MyMutation {
         __typename
-        insert_user(objects: {phoneNumber: "${phoneNumber}", password: "${password}", name: "${name}", email: "${email}", area: "${area}"}) {
+        insert_user(objects: {phoneNumber: "${phoneNumber}", 
+        password: "${password}", 
+        name: "${name}", 
+        email: "${email}", 
+        area: "${area}"}) {
             affected_rows
             returning {
                 id
