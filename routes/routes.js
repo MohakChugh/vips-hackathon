@@ -28,30 +28,6 @@ router.route('/insertUser')
         });
     });
 
-router.route('/getUser')
-    .post(async (req, res) => {
-        
-        let { email } = req.body;
-
-        if(!(data)) {
-            return res.json({
-                error:'invalid request',
-                success: false,
-                response: false,
-            });
-        }
-
-        // Processing
-        
-        return res.json({
-            error: false,
-            success: true,
-            response: {
-                "message": "response",
-            },
-        });
-    });
-
 router.route('/getUserByEmail')
     .post(async (req, res) => {
         
@@ -100,6 +76,8 @@ router.route('/getUserPassword')
         });
     });
 
+// Problems
+
 router.route('/insertProblem')
     .post(async (req, res) => {
         
@@ -127,14 +105,6 @@ router.route('/insertProblem')
 router.route('/getProblem')
     .post(async (req, res) => {
         
-        if(!(data)) {
-            return res.json({
-                error:'invalid request',
-                success: false,
-                response: false,
-            });
-        }
-
         // Processing
         
         return res.json({
@@ -173,7 +143,7 @@ router.route('/getProblemByAreaID')
 router.route('/getProblemByUser')
     .post(async (req, res) => {
         
-        let { email } = req.body;
+        let { userid } = req.body;
         
         if(!(data)) {
             return res.json({
