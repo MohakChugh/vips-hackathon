@@ -35,9 +35,7 @@ router.route('/insertUser')
 
 router.route('/getUserByEmail')
     .post(async (req, res) => {
-
         let { email } = req.body;
-
         if (!(email)) {
             return res.json({
                 error: 'invalid request',
@@ -45,10 +43,8 @@ router.route('/getUserByEmail')
                 response: false,
             });
         }
-
         // Processing
         let resp = await gql.getUserByEmail(email);
-
         return res.json({
             error: false,
             success: true,
@@ -58,9 +54,7 @@ router.route('/getUserByEmail')
 
 router.route('/getUserPassword')
     .post(async (req, res) => {
-
         let { email } = req.body;
-
         if (!(email)) {
             return res.json({
                 error: 'invalid request',
@@ -68,10 +62,8 @@ router.route('/getUserPassword')
                 response: false,
             });
         }
-
         // Processing
         let resp = await gql.getUserPassword(email);
-
         return res.json({
             error: false,
             success: true,
