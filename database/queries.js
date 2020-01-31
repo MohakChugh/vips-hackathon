@@ -27,6 +27,26 @@ const insertUser = async (phoneNumber, password, name, email, area) => {
     return result
 };
 
+const getAllAreasInfo = async () => {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
+        headers: {
+            'content-type': 'application/json',
+        },
+    })
+    const query = `query MyQuery {
+        area {
+            areaName
+            govtId
+            id
+        }
+    }`
+
+    let result = await client.request(query)
+        .then(data => { return data })
+        .catch((err) => { return err })
+    return result
+};
+
 const getUserByEmail = async (email) => {
     const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
@@ -386,3 +406,4 @@ exports.deleteProblem = deleteProblem
 exports.digiSignProblem = digiSignProblem
 exports.insertOfficial = insertOfficial
 exports.getOfficialPassword = getOfficialPassword
+exports.getAllAreasInfo = getAllAreasInfo
