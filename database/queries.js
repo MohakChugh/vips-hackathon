@@ -326,14 +326,24 @@ const digiSignProblem = async (problemid) => {
     return result
 };
 
-
-const insertOfficial = async (name, password, email, phone, department, area) => {
+const insertOfficial = async (areaid, name, password, email, phone, department) => {
     const client = new GraphQLClient('', {
         headers: {
             'content-type': 'application/json',
         },
     })
-    const query = ``
+    const query = `mutation MyMutation {
+        __typename
+        insert_govtOfficials(objects: {
+            areaid: "${areaid}", 
+            department: "${department}", 
+            email: "${email}", 
+            name: "${name}", 
+            password: "${password}", 
+            phone: "${phone}"}) {
+                affected_rows
+        }
+    }`
     
     let result = await client.request(query)
         .then(data => { return data })
@@ -347,7 +357,12 @@ const getOfficialPassword = async (email) => {
             'content-type': 'application/json',
         },
     })
-    const query = ``
+    const query = `query MyQuery {
+        __typename
+        govtOfficials(where: {email: {_eq: ""}}) {
+            password
+        }
+    }`
     
     let result = await client.request(query)
         .then(data => { return data })
@@ -355,3 +370,18 @@ const getOfficialPassword = async (email) => {
     return result
 };
 
+exports.insertUser = insertUser
+exports.getUserByEmail = getUserByEmail
+exports.getUserPassword = getUserPassword
+exports.getProblem = getProblem
+exports.getProblemByAreaID = getProblemByAreaID
+exports.getProblemByUser = getProblemByUser
+exports.getProblemByDepartent = getProblemByDepartent
+exports.upvoteProblem = upvoteProblem
+exports.fetchUpvoteProblem = fetchUpvoteProblem
+exports.downvoteProblem = downvoteProblem
+exports.fetchDownvoteProblem = fetchDownvoteProblem
+exports.deleteProblem = deleteProblem
+exports.digiSignProblem = digiSignProblem
+exports.insertOfficial = insertOfficial
+exports.getOfficialPassword = getOfficialPassword
