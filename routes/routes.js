@@ -99,7 +99,6 @@ router.route('/getProblem')
 
         // Processing
         let resp = await gql.getProblem();
-
         return res.json({
             error: false,
             success: true,

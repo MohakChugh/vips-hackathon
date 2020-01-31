@@ -15,7 +15,7 @@ function twitter () {
     });
 
     var stream = T.stream('statuses/filter', { track: '#adisakshya' });
-    console.log(stream)
+    // console.log(stream)
     stream.on('tweet', function (tweet) {
         var info = {
             origin: tweet.created_at,
@@ -28,14 +28,14 @@ function twitter () {
 
         let func = async () => {
             let data = await cacheTweet(info);
-            console.log(data);
+            // console.log(data);
         }
         func()
     });
 }
 
 function cacheTweet(tweetInfo) {
-    console.log(tweetInfo)
+    // console.log(tweetInfo)
     return new Promise(async (resolve, reject) => {
         if (tweetInfo.origin && tweetInfo.description && tweetInfo.area && tweetInfo.department && tweetInfo.email && tweetInfo.title) {
             
@@ -45,7 +45,7 @@ function cacheTweet(tweetInfo) {
             var aid = 0;
             var image_url = '';
             var res = await gql.insertProblem(aid, tweetInfo.department, image_url, tweetInfo.description, tweetInfo.title, cid);
-            console.log(res)
+            // console.log(res)
             resolve("Tweet Inserted in DB");
         } else {
             reject("Invalid Tweet !");

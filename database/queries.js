@@ -70,6 +70,26 @@ const getUserByEmail = async (email) => {
     return result
 };
 
+const getUserById = async (id) => {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
+        headers: {
+            'content-type': 'application/json',
+        },
+    })
+    const query = `query MyQuery {
+        user(where: {id: {_eq: "${id}"}}) {
+            name
+            email
+            phoneNumber
+        }
+    }`
+    
+    let result = await client.request(query)
+        .then(data => { return data })
+        .catch((err) => { return err })
+    return result
+};
+
 const getUserPassword = async (email) => {
     const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
@@ -131,11 +151,14 @@ const getProblem = async () => {
             description
             digiSignature_Count
             downvote
-            image_url
+            getuserbyid {
+                name
+            }
             id
+            image_url
             originTime
-            resolveTime
             status
+            resolveTime
             title
             upvote
         }
@@ -437,3 +460,4 @@ exports.getOfficialPassword = getOfficialPassword
 exports.getAllAreasInfo = getAllAreasInfo
 exports.getOfficialByArea = getOfficialByArea
 exports.insertDigitalSignatures = insertDigitalSignatures
+exports.getUserById = getUserById
