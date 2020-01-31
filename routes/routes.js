@@ -286,7 +286,7 @@ router.route('/insertOfficial')
         
         let { name, password, email, phone, department, area } = req.body;
         
-        if(!(data)) {
+        if(!(name, password, email, phone, department, area)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -295,13 +295,12 @@ router.route('/insertOfficial')
         }
 
         // Processing
+        let res = await gql.insertOfficial(name, password, email, phone, department, area);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: res,
         });
     });
 
@@ -310,7 +309,7 @@ router.route('/getOfficialPassword')
         
         let { email } = req.body;
         
-        if(!(data)) {
+        if(!(email)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -319,12 +318,11 @@ router.route('/getOfficialPassword')
         }
 
         // Processing
+        let res = await gql.getOfficialPassword(email);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: res,
         });
     });
