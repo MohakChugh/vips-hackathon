@@ -9,7 +9,11 @@ const insertUser = async (phoneNumber, password, name, email, area) => {
     })
     const query = `mutation MyMutation {
         __typename
-        insert_user(objects: {phoneNumber: "${phoneNumber}", password: "${password}", name: "${name}", email: "${email}", area: "${area}"}) {
+        insert_user(objects: {phoneNumber: "${phoneNumber}", 
+        password: "${password}", 
+        name: "${name}", 
+        email: "${email}", 
+        area: "${area}"}) {
             affected_rows
             returning {
                 id
@@ -23,13 +27,22 @@ const insertUser = async (phoneNumber, password, name, email, area) => {
     return result
 };
 
-const getUser = async (email) => {
+const getUserByEmail = async (email) => {
     const client = new GraphQLClient('', {
         headers: {
             'content-type': 'application/json',
         },
     })
-    const query = ``
+    const query = `query MyQuery {
+        user(where: {email: {_eq: "${email}"}}) {
+            area
+            areaid
+            email
+            name
+            id
+            phoneNumber
+        }
+    }`
     
     let result = await client.request(query)
         .then(data => { return data })
