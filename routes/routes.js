@@ -100,7 +100,7 @@ router.route('/insertProblem')
     });
 
 router.route('/getProblem')
-    .post(async (req, res) => {
+    .get(async (req, res) => {
         
         // Processing
         let resp = await gql.getProblem();
