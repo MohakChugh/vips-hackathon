@@ -17,3 +17,5 @@ app.route('/')
 app.listen(port ,() => {
     console.log(`Express server started on port ${port}`)
 })
+
+const twitter = require('./lib/twitter');
