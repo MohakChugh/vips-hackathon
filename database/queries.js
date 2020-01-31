@@ -390,6 +390,33 @@ const getOfficialPassword = async (email) => {
     return result
 };
 
+const getOfficialByArea = async (areaid) => {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
+        headers: {
+            'content-type': 'application/json',
+        },
+    })
+    const query = `query MyQuery {
+        govtOfficials(where: {areaid: {_eq: "${areaid}"}}) {
+            areaid
+            department
+            email
+            id
+            name
+            phone
+        }
+    }`
+    
+    let result = await client.request(query)
+        .then(data => { return data })
+        .catch((err) => { return err })
+    return result
+};
+
+
+
+
+
 exports.insertUser = insertUser
 exports.getUserByEmail = getUserByEmail
 exports.getUserPassword = getUserPassword
@@ -406,3 +433,4 @@ exports.digiSignProblem = digiSignProblem
 exports.insertOfficial = insertOfficial
 exports.getOfficialPassword = getOfficialPassword
 exports.getAllAreasInfo = getAllAreasInfo
+exports.getOfficialByArea = getOfficialByArea
