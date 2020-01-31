@@ -217,13 +217,39 @@ const getProblemByDepartent = async (department) => {
     return result
 };
 
-const upvoteProblem = async (problemid) => {
+const upvoteProblem = async (problemid, incrementedUpvote) => {
     const client = new GraphQLClient('', {
         headers: {
             'content-type': 'application/json',
         },
     })
-    const query = ``
+    const query = `mutation MyMutation {
+        __typename
+        update_problems(where: {id: {_eq: "${problemid}"}}, _set: {upvote: "${incrementedUpvote}"}) {
+            affected_rows
+            returning {
+                upvote
+            }
+        }
+    }`
+    
+    let result = await client.request(query)
+        .then(data => { return data })
+        .catch((err) => { return err })
+    return result
+};
+
+const fetchUpvoteProblem = async (problemid) => {
+    const client = new GraphQLClient('', {
+        headers: {
+            'content-type': 'application/json',
+        },
+    })
+    const query = `query MyQuery {
+        problems(where: {id: {_eq: "${problemid}"}}) {
+            upvote
+        }
+    }`
     
     let result = await client.request(query)
         .then(data => { return data })
