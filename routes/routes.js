@@ -1,3 +1,4 @@
+const gql = require('../database/queries')
 const express = require('express')
 const router = express.Router();
 
@@ -9,7 +10,7 @@ router.route('/insertUser')
         // get data
         let  { phoneNumber, password, name, email, area } = req.body;
         
-        if(!(data)) {
+        if(!(phoneNumber && password && name && email && area)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -18,13 +19,12 @@ router.route('/insertUser')
         }
 
         // Processing
-        
+        let res = await gql.insertUser(phoneNumber, password, name, email, area);
+
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: res,
         });
     });
 
@@ -33,7 +33,7 @@ router.route('/getUserByEmail')
         
         let { email } = req.body;
 
-        if(!(data)) {
+        if(!(email)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -42,13 +42,12 @@ router.route('/getUserByEmail')
         }
 
         // Processing
+        let res = await gql.getUserByEmail(email);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: res,
         });
     });
 
@@ -57,7 +56,7 @@ router.route('/getUserPassword')
         
         let { email } = req.body;
 
-        if(!(data)) {
+        if(!(email)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -66,13 +65,12 @@ router.route('/getUserPassword')
         }
 
         // Processing
+        let res = await gql.getUserPassword(email);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: res,
         });
     });
 
@@ -83,7 +81,7 @@ router.route('/insertProblem')
         
         let { areaid, department, image_url, description, title, areaid, userid } = req.body;
 
-        if(!(data)) {
+        if(!(areaid && department && image_url && description && title && areaid && userid)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -92,13 +90,12 @@ router.route('/insertProblem')
         }
 
         // Processing
+        let res = await gql.insertProblem(areaid, department, image_url, description, title, areaid, userid);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: res,
         });
     });
 
@@ -106,13 +103,12 @@ router.route('/getProblem')
     .post(async (req, res) => {
         
         // Processing
+        let res = await gql.getProblem();
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: res,
         });
     });
 
@@ -121,7 +117,7 @@ router.route('/getProblemByAreaID')
         
         let { areaid } = req.body;
         
-        if(!(data)) {
+        if(!(areaid)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -130,13 +126,12 @@ router.route('/getProblemByAreaID')
         }
 
         // Processing
+        let res = await gql.getProblemByAreaID(areaid);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: res,
         });
     });
 
@@ -145,7 +140,7 @@ router.route('/getProblemByUser')
         
         let { userid } = req.body;
         
-        if(!(data)) {
+        if(!(userid)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -154,6 +149,7 @@ router.route('/getProblemByUser')
         }
 
         // Processing
+        let res = await gql.getProblemByUser(userid);
         
         return res.json({
             error: false,
@@ -169,7 +165,7 @@ router.route('/getProblemByDepartent')
         
         let { department } = req.body;
         
-        if(!(data)) {
+        if(!(department)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -178,13 +174,12 @@ router.route('/getProblemByDepartent')
         }
 
         // Processing
+        let res = await gql.getProblemByDepartent(department);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: res,
         });
     });
 
@@ -193,7 +188,7 @@ router.route('/upvoteProblem')
         
         let { problemid } = req.body;
         
-        if(!(data)) {
+        if(!(problemid)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -202,13 +197,13 @@ router.route('/upvoteProblem')
         }
 
         // Processing
+        let upvotes = await gql.fetchUpvoteProblem(problemid);
+        let res = await gql.upvoteProblem(problemid, upvotes+1);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: res,
         });
     });
 
@@ -217,7 +212,7 @@ router.route('/downvoteProblem')
         
         let { problemid } = req.body;
         
-        if(!(data)) {
+        if(!(problemid)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -226,13 +221,13 @@ router.route('/downvoteProblem')
         }
 
         // Processing
+        let downvotes = await gql.fetchDownvoteProblem(problemid);
+        let res = await gql.downvoteProblem(problemid, downvotes+1);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: res,
         });
     });
 
