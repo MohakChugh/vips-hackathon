@@ -1,10 +1,9 @@
 // @ts-check
 var Twit = require('twit');
 const gql = require("../database/queries");
-// const config = require('../config/config');
 
 function twitter () {
-    console.log("Listening for tweets hashtag => #CitizensApp");
+    console.log("Listening for tweets hashtag => #adisakshya");
 
     var T = new Twit({
         consumer_key:         "8NO0gW8xzzHT4WUIcGfIZ2OW5",
@@ -32,9 +31,6 @@ function twitter () {
             console.log(data);
         }
         func()
-            // }.catch(function(err){
-        //     console.log(err);
-        // });
     });
 }
 
@@ -57,7 +53,4 @@ function cacheTweet(tweetInfo) {
     });
 }
 
-
 twitter();
-
-// module.exports = { cacheTweet }
