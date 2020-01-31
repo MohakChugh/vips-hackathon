@@ -161,6 +161,9 @@ const getProblem = async () => {
             resolveTime
             title
             upvote
+            getareanamebyid {
+                areaName
+            }
         }
     }`
     
