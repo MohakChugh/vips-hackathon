@@ -103,7 +103,23 @@ const getProblem = async () => {
         },
     })
 
-    const query = ``
+    const query = `query MyQuery {
+        problems {
+            areaid
+            citizen_id
+            department
+            description
+            digiSignature_Count
+            downvote
+            image_url
+            id
+            originTime
+            resolveTime
+            status
+            title
+            upvote
+        }
+    }`
     
     let result = await client.request(query)
         .then(data => { return data })
