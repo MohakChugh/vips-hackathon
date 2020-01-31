@@ -3,52 +3,49 @@ const router = express.Router();
 
 // Users API Route
 
-router.post('/insertUser', async function (req, response) {
+router.route('/insertUser')
+    .post(async (req, res) => {
+        
+        // get data
+        let  { data } = req.body;
+        
+        if(!(data)) {
+            return res.json({
+                error:'invalid request',
+                success: false,
+                response: false,
+            });
+        }
 
-    // get data
-    let  { data } = req.body;
-    
-    if(!(data)) {
-        return response.json({
-            error:'invalid request',
-            success: false,
-            response: false,
+        // Processing
+        
+        return res.json({
+            error: false,
+            success: true,
+            response: {
+                "message": "response",
+            },
         });
-    }
-
-    // Processing
-    
-    return response.json({
-        error: false,
-        success: true,
-        response: {
-            "message": "response",
-        },
     });
 
-});
+router.route('/getUser')
+    .post(async (req, res) => {
+        
+        if(!(data)) {
+            return res.json({
+                error:'invalid request',
+                success: false,
+                response: false,
+            });
+        }
 
-router.post('/<name>', async function (req, response) {
-
-    // get data
-    let  { data } = req.body;
-    
-    if(!(data)) {
-        return response.json({
-            error:'invalid request',
-            success: false,
-            response: false,
+        // Processing
+        
+        return res.json({
+            error: false,
+            success: true,
+            response: {
+                "message": "response",
+            },
         });
-    }
-
-    // Processing
-    
-    return response.json({
-        error: false,
-        success: true,
-        response: {
-            "message": "response",
-        },
     });
-
-});
