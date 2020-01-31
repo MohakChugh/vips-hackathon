@@ -414,6 +414,25 @@ const getOfficialByArea = async (areaid) => {
     return result
 };
 
+const insertDigitalSignatures = async (problemID, userID) => {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
+        headers: {
+            'content-type': 'application/json',
+        },
+    })
+    const query = `mutation MyMutation {
+        __typename
+        insert_digitalSignatures(objects: {problemID: "${problemID}", userID: "${userID}"}) {
+            affected_rows
+        }
+    }`
+    
+    let result = await client.request(query)
+        .then(data => { return data })
+        .catch((err) => { return err })
+    return result
+};
+
 exports.insertUser = insertUser
 exports.getUserByEmail = getUserByEmail
 exports.getUserPassword = getUserPassword
@@ -432,3 +451,4 @@ exports.insertOfficial = insertOfficial
 exports.getOfficialPassword = getOfficialPassword
 exports.getAllAreasInfo = getAllAreasInfo
 exports.getOfficialByArea = getOfficialByArea
+exports.insertDigitalSignatures = insertDigitalSignatures
