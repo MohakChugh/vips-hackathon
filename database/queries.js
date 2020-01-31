@@ -50,13 +50,17 @@ const getUserByEmail = async (email) => {
     return result
 };
 
-const getUserPassword = async (data) => {
+const getUserPassword = async (email) => {
     const client = new GraphQLClient('', {
         headers: {
             'content-type': 'application/json',
         },
     })
-    const query = ``
+    const query = `query MyQuery {
+        user(where: {email: {_eq: "${email}"}}) {
+                password
+        }
+    }`
     
     let result = await client.request(query)
         .then(data => { return data })
