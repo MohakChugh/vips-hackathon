@@ -1,13 +1,21 @@
 const graphqlrequest = require('graphql-request')
 const GraphQLClient = graphqlrequest.GraphQLClient
 
-const insertUser = async () => {
+const insertUser = async (phoneNumber, password, name, email, area) => {
     const client = new GraphQLClient('', {
         headers: {
             'content-type': 'application/json',
         },
     })
-    const query = ``
+    const query = `mutation MyMutation {
+        __typename
+        insert_user(objects: {phoneNumber: "${phoneNumber}", password: "${password}", name: "${name}", email: "${email}", area: "${area}"}) {
+            affected_rows
+            returning {
+                id
+            }
+        }
+    }`
 
     let result = await client.request(query)
         .then(data => { return data })
@@ -15,7 +23,7 @@ const insertUser = async () => {
     return result
 };
 
-const getUser = async () => {
+const getUser = async (email) => {
     const client = new GraphQLClient('', {
         headers: {
             'content-type': 'application/json',
