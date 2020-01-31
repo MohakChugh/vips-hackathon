@@ -370,3 +370,18 @@ const getOfficialPassword = async (email) => {
     return result
 };
 
+exports.insertUser = insertUser
+exports.getUserByEmail = getUserByEmail
+exports.getUserPassword = getUserPassword
+exports.getProblem = getProblem
+exports.getProblemByAreaID = getProblemByAreaID
+exports.getProblemByUser = getProblemByUser
+exports.getProblemByDepartent = getProblemByDepartent
+exports.upvoteProblem = upvoteProblem
+exports.fetchUpvoteProblem = fetchUpvoteProblem
+exports.downvoteProblem = downvoteProblem
+exports.fetchDownvoteProblem = fetchDownvoteProblem
+exports.deleteProblem = deleteProblem
+exports.digiSignProblem = digiSignProblem
+exports.insertOfficial = insertOfficial
+exports.getOfficialPassword = getOfficialPassword
