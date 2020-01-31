@@ -2,7 +2,7 @@ const graphqlrequest = require('graphql-request')
 const GraphQLClient = graphqlrequest.GraphQLClient
 
 const insertUser = async (phoneNumber, password, name, email, area) => {
-    const client = new GraphQLClient('', {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
             'content-type': 'application/json',
         },
@@ -28,7 +28,7 @@ const insertUser = async (phoneNumber, password, name, email, area) => {
 };
 
 const getUserByEmail = async (email) => {
-    const client = new GraphQLClient('', {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
             'content-type': 'application/json',
         },
@@ -51,7 +51,7 @@ const getUserByEmail = async (email) => {
 };
 
 const getUserPassword = async (email) => {
-    const client = new GraphQLClient('', {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
             'content-type': 'application/json',
         },
@@ -69,7 +69,7 @@ const getUserPassword = async (email) => {
 };
 
 const insertProblem = async (areaid, department, image_url, description, title, userid) => {
-    const client = new GraphQLClient('', {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
             'content-type': 'application/json',
         },
@@ -97,7 +97,7 @@ const insertProblem = async (areaid, department, image_url, description, title, 
 
 
 const getProblem = async () => {
-    const client = new GraphQLClient('', {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
             'content-type': 'application/json',
         },
@@ -128,7 +128,7 @@ const getProblem = async () => {
 };
 
 const getProblemByAreaID = async (areaid) => {
-    const client = new GraphQLClient('', {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
             'content-type': 'application/json',
         },
@@ -158,7 +158,7 @@ const getProblemByAreaID = async (areaid) => {
 };
 
 const getProblemByUser = async (userid) => {
-    const client = new GraphQLClient('', {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
             'content-type': 'application/json',
         },
@@ -188,7 +188,7 @@ const getProblemByUser = async (userid) => {
 };
 
 const getProblemByDepartent = async (department) => {
-    const client = new GraphQLClient('', {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
             'content-type': 'application/json',
         },
@@ -218,7 +218,7 @@ const getProblemByDepartent = async (department) => {
 };
 
 const upvoteProblem = async (problemid, incrementedUpvote) => {
-    const client = new GraphQLClient('', {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
             'content-type': 'application/json',
         },
@@ -240,7 +240,7 @@ const upvoteProblem = async (problemid, incrementedUpvote) => {
 };
 
 const fetchUpvoteProblem = async (problemid) => {
-    const client = new GraphQLClient('', {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
             'content-type': 'application/json',
         },
@@ -258,7 +258,7 @@ const fetchUpvoteProblem = async (problemid) => {
 };
 
 const downvoteProblem = async (problemid) => {
-    const client = new GraphQLClient('', {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
             'content-type': 'application/json',
         },
@@ -280,7 +280,7 @@ const downvoteProblem = async (problemid) => {
 };
 
 const fetchDownvoteProblem = async (problemid) => {
-    const client = new GraphQLClient('', {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
             'content-type': 'application/json',
         },
@@ -299,7 +299,7 @@ const fetchDownvoteProblem = async (problemid) => {
 
 
 const deleteProblem = async (problemid) => {
-    const client = new GraphQLClient('', {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
             'content-type': 'application/json',
         },
@@ -313,7 +313,7 @@ const deleteProblem = async (problemid) => {
 };
 
 const digiSignProblem = async (problemid) => {
-    const client = new GraphQLClient('', {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
             'content-type': 'application/json',
         },
@@ -327,7 +327,7 @@ const digiSignProblem = async (problemid) => {
 };
 
 const insertOfficial = async (areaid, name, password, email, phone, department) => {
-    const client = new GraphQLClient('', {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
             'content-type': 'application/json',
         },
@@ -352,7 +352,7 @@ const insertOfficial = async (areaid, name, password, email, phone, department) 
 };
 
 const getOfficialPassword = async (email) => {
-    const client = new GraphQLClient('', {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
             'content-type': 'application/json',
         },
