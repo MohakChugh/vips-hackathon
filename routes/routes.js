@@ -117,9 +117,7 @@ router.route('/getProblem')
 
 router.route('/getProblemByAreaID')
     .post(async (req, res) => {
-
         let { areaid } = req.body;
-
         if (!(areaid)) {
             return res.json({
                 error: 'invalid request',
@@ -127,10 +125,8 @@ router.route('/getProblemByAreaID')
                 response: false,
             });
         }
-
         // Processing
         let resp = await gql.getProblemByAreaID(areaid);
-
         return res.json({
             error: false,
             success: true,
@@ -140,9 +136,7 @@ router.route('/getProblemByAreaID')
 
 router.route('/getProblemByUser')
     .post(async (req, res) => {
-
         let { userid } = req.body;
-
         if (!(userid)) {
             return res.json({
                 error: 'invalid request',
@@ -150,10 +144,8 @@ router.route('/getProblemByUser')
                 response: false,
             });
         }
-
         // Processing
         let resp = await gql.getProblemByUser(userid);
-
         return res.json({
             error: false,
             success: true,
@@ -163,9 +155,7 @@ router.route('/getProblemByUser')
 
 router.route('/getProblemByDepartent')
     .post(async (req, res) => {
-
         let { department } = req.body;
-
         if (!(department)) {
             return res.json({
                 error: 'invalid request',
@@ -173,10 +163,8 @@ router.route('/getProblemByDepartent')
                 response: false,
             });
         }
-
         // Processing
         let resp = await gql.getProblemByDepartent(department);
-
         return res.json({
             error: false,
             success: true,
@@ -186,9 +174,7 @@ router.route('/getProblemByDepartent')
 
 router.route('/upvoteProblem')
     .post(async (req, res) => {
-
         let { problemid } = req.body;
-
         if (!(problemid)) {
             return res.json({
                 error: 'invalid request',
@@ -196,14 +182,12 @@ router.route('/upvoteProblem')
                 response: false,
             });
         }
-
         // Processing
         let upvotes = await gql.fetchUpvoteProblem(parseInt(problemid));
         let resp = [];
         if (upvotes.problems) {
             resp = await gql.upvoteProblem(problemid, upvotes.problems[0].upvote + 1);
         }
-
         return res.json({
             error: false,
             success: true,
@@ -213,9 +197,7 @@ router.route('/upvoteProblem')
 
 router.route('/downvoteProblem')
     .post(async (req, res) => {
-
         let { problemid } = req.body;
-
         if (!(problemid)) {
             return res.json({
                 error: 'invalid request',
@@ -223,7 +205,6 @@ router.route('/downvoteProblem')
                 response: false,
             });
         }
-
         // Processing
         let downvotes = await gql.fetchDownvoteProblem(parseInt(problemid));
         console.log(downvotes)
@@ -231,7 +212,6 @@ router.route('/downvoteProblem')
         if (downvotes.problems) {
             resp = await gql.downvoteProblem(problemid, downvotes.problems[0].downvote + 1);
         }
-
         return res.json({
             error: false,
             success: true,
@@ -241,9 +221,7 @@ router.route('/downvoteProblem')
 
 router.route('/deleteProblem')
     .post(async (req, res) => {
-
         let { problemid } = req.body;
-
         if (!(data)) {
             return res.json({
                 error: 'invalid request',
@@ -251,9 +229,7 @@ router.route('/deleteProblem')
                 response: false,
             });
         }
-
         // Processing
-
         return res.json({
             error: false,
             success: true,
@@ -265,9 +241,7 @@ router.route('/deleteProblem')
 
 router.route('/digiSignProblem')
     .post(async (req, res) => {
-
         let { problemid, userid } = req.body;
-
         if (!(problemid && userid)) {
             return res.json({
                 error: 'invalid request',
@@ -275,11 +249,9 @@ router.route('/digiSignProblem')
                 response: false,
             });
         }
-
         // Processing
         let digitalsign = await digitalSignature.digitalSignature(problemid, userid);
         let resp = await gql.insertDigitalSignatures(digitalsign);
-
         if (!resp) {
             return res.json({
                 error: true,
@@ -287,7 +259,6 @@ router.route('/digiSignProblem')
                 response: null,
             });
         }
-
         return res.json({
             error: false,
             success: true,
@@ -299,9 +270,7 @@ router.route('/digiSignProblem')
 
 router.route('/insertOfficial')
     .post(async (req, res) => {
-
         let { name, password, email, phone, department, areaid } = req.body;
-
         if (!(name, password, email, phone, department, areaid)) {
             return res.json({
                 error: 'invalid request',
@@ -309,10 +278,8 @@ router.route('/insertOfficial')
                 response: false,
             });
         }
-
         // Processing
         let resp = await gql.insertOfficial(name, password, email, phone, department, areaid);
-
         return res.json({
             error: false,
             success: true,
@@ -322,9 +289,7 @@ router.route('/insertOfficial')
 
 router.route('/digiSignProblem')
     .post(async (req, res) => {
-
         let { problemid, userid } = req.body;
-
         if (!(problemid && userid)) {
             return res.json({
                 error: 'invalid request',
@@ -332,11 +297,9 @@ router.route('/digiSignProblem')
                 response: false,
             });
         }
-
         // Processing
         let digitalsign = await digitalSignature.digitalSignature(problemid, userid);
         let resp = await gql.insertDigitalSignatures(digitalsign, userid, problemid);
-
         if (!resp) {
             return res.json({
                 error: true,
