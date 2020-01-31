@@ -413,10 +413,6 @@ const getOfficialByArea = async (areaid) => {
     return result
 };
 
-
-
-
-
 exports.insertUser = insertUser
 exports.getUserByEmail = getUserByEmail
 exports.getUserPassword = getUserPassword
