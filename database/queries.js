@@ -390,6 +390,10 @@ const getOfficialPassword = async (email) => {
     return result
 };
 
+/**
+ * Link Area tables and govt officials area id
+ * and Update queries 
+ */
 const getOfficialByArea = async (areaid) => {
     const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
@@ -398,12 +402,9 @@ const getOfficialByArea = async (areaid) => {
     })
     const query = `query MyQuery {
         govtOfficials(where: {areaid: {_eq: "${areaid}"}}) {
-            areaid
             department
             email
-            id
             name
-            phone
         }
     }`
     

@@ -334,4 +334,27 @@ router.route('/getOfficialPassword')
         });
     });
 
+router.route('/getOfficialByArea')
+    .post(async (req, res) => {
+        
+        let { areaid } = req.body;
+        
+        if(!(areaid)) {
+            return res.json({
+                error:'invalid request',
+                success: false,
+                response: false,
+            });
+        }
+
+        // Processing
+        let resp = await gql.getOfficialByArea(areaid);
+        
+        return res.json({
+            error: false,
+            success: true,
+            response: resp,
+        });
+    });
+
 module.exports = router
