@@ -1,17 +1,17 @@
 var Twit = require('twit');
 const gql = require("../database/queries");
-const config = require('../config/config');
+// const config = require('../config/config');
 
 function twitter () {
     console.log("Listening for tweets hashtag => #CitizensAppMakeathon");
 
     var T = new Twit({
-        consumer_key:         config.consumer_key,
-        consumer_secret:      config.consumer_secret,
-        access_token:         config.access_token,
-        access_token_secret:  config.access_token_secret,
+        consumer_key:         "8NO0gW8xzzHT4WUIcGfIZ2OW5",
+        consumer_secret:      "sAdUBjZFdH18Nt4j26gkLbDGd7GkTp7WlTZyaQkI4873WvCnYZ",
+        access_token:         "1114549401475633152-mWUjARjPA0FL6yfchcTxd9Es5c8n87",
+        access_token_secret:  "TjOK9jTyXT4KRnEvLUxyxxJZoTwO9iYOAvqIygMCNGUlA",
         timeout_ms:           60*1000,
-        strictSSL:            true,
+        strictSSL:            false,
     });
 
     var stream = T.stream('statuses/filter', { track: '#CitizensAppMakeathon', language: 'en' });
