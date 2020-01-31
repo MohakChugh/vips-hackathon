@@ -83,12 +83,9 @@ router.route('/getUserPassword')
 
 router.route('/insertProblem')
     .post(async (req, res) => {
-
         let { areaid, department, image_url, description, title, userid } = req.body;
-
         // Call sms function here
         sms.sendsms(9810178257, "Your problem has been updated! Someone from our team will contact you soon! Thank you for reaching out to us!")
-
         if (!(areaid && department && image_url && description && title && userid)) {
             return res.json({
                 error: 'invalid request',
@@ -96,10 +93,8 @@ router.route('/insertProblem')
                 response: false,
             });
         }
-
         // Processing
         let resp = await gql.insertProblem(areaid, department, image_url, description, title, userid);
-
         return res.json({
             error: false,
             success: true,
