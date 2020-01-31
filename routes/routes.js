@@ -1,3 +1,4 @@
+const gql = require('../database/queries')
 const express = require('express')
 const router = express.Router();
 const bodyparser = require('body-parser')
@@ -12,7 +13,7 @@ router.route('/insertUser')
         // get data
         let  { phoneNumber, password, name, email, area } = req.body;
         
-        if(!(data)) {
+        if(!(phoneNumber && password && name && email && area)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -21,22 +22,21 @@ router.route('/insertUser')
         }
 
         // Processing
-        
+        let resp = await gql.insertUser(phoneNumber, password, name, email, area);
+
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: resp,
         });
     });
 
-router.route('/getUser')
+router.route('/getUserByEmail')
     .post(async (req, res) => {
         
         let { email } = req.body;
 
-        if(!(data)) {
+        if(!(email)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -45,22 +45,21 @@ router.route('/getUser')
         }
 
         // Processing
+        let resp = await gql.getUserByEmail(email);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: resp,
         });
     });
 
 router.route('/getUserPassword')
     .post(async (req, res) => {
         
-        let { data } = req.body;
+        let { email } = req.body;
 
-        if(!(data)) {
+        if(!(email)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -69,22 +68,23 @@ router.route('/getUserPassword')
         }
 
         // Processing
+        let resp = await gql.getUserPassword(email);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: resp,
         });
     });
+
+// Problems
 
 router.route('/insertProblem')
     .post(async (req, res) => {
         
-        let { description, title, areaid, userid } = req.body;
+        let { areaid, department, image_url, description, title, userid } = req.body;
 
-        if(!(data)) {
+        if(!(areaid && department && image_url && description && title && userid)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -93,35 +93,25 @@ router.route('/insertProblem')
         }
 
         // Processing
+        let resp = await gql.insertProblem(areaid, department, image_url, description, title, areaid, userid);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: resp,
         });
     });
 
 router.route('/getProblem')
     .post(async (req, res) => {
         
-        if(!(data)) {
-            return res.json({
-                error:'invalid request',
-                success: false,
-                response: false,
-            });
-        }
-
         // Processing
+        let resp = await gql.getProblem();
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: resp,
         });
     });
 
@@ -130,7 +120,7 @@ router.route('/getProblemByAreaID')
         
         let { areaid } = req.body;
         
-        if(!(data)) {
+        if(!(areaid)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -139,22 +129,21 @@ router.route('/getProblemByAreaID')
         }
 
         // Processing
+        let resp = await gql.getProblemByAreaID(areaid);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: resp,
         });
     });
 
 router.route('/getProblemByUser')
     .post(async (req, res) => {
         
-        let { email } = req.body;
+        let { userid } = req.body;
         
-        if(!(data)) {
+        if(!(userid)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -163,6 +152,7 @@ router.route('/getProblemByUser')
         }
 
         // Processing
+        let resp = await gql.getProblemByUser(userid);
         
         return res.json({
             error: false,
@@ -178,7 +168,7 @@ router.route('/getProblemByDepartent')
         
         let { department } = req.body;
         
-        if(!(data)) {
+        if(!(department)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -187,13 +177,12 @@ router.route('/getProblemByDepartent')
         }
 
         // Processing
+        let resp = await gql.getProblemByDepartent(department);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: resp,
         });
     });
 
@@ -202,7 +191,7 @@ router.route('/upvoteProblem')
         
         let { problemid } = req.body;
         
-        if(!(data)) {
+        if(!(problemid)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -211,13 +200,13 @@ router.route('/upvoteProblem')
         }
 
         // Processing
+        let upvotes = await gql.fetchUpvoteProblem(problemid);
+        let resp = await gql.upvoteProblem(problemid, upvotes+1);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: resp,
         });
     });
 
@@ -226,7 +215,7 @@ router.route('/downvoteProblem')
         
         let { problemid } = req.body;
         
-        if(!(data)) {
+        if(!(problemid)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -235,13 +224,13 @@ router.route('/downvoteProblem')
         }
 
         // Processing
+        let downvotes = await gql.fetchDownvoteProblem(problemid);
+        let resp = await gql.downvoteProblem(problemid, downvotes+1);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: resp,
         });
     });
 
@@ -293,12 +282,14 @@ router.route('/digiSignProblem')
         });
     });
 
+// Government
+
 router.route('/insertOfficial')
     .post(async (req, res) => {
         
         let { name, password, email, phone, department, area } = req.body;
         
-        if(!(data)) {
+        if(!(name, password, email, phone, department, area)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -307,13 +298,12 @@ router.route('/insertOfficial')
         }
 
         // Processing
+        let resp = await gql.insertOfficial(name, password, email, phone, department, area);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: resp,
         });
     });
 
@@ -322,7 +312,7 @@ router.route('/getOfficialPassword')
         
         let { email } = req.body;
         
-        if(!(data)) {
+        if(!(email)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -331,12 +321,13 @@ router.route('/getOfficialPassword')
         }
 
         // Processing
+        let resp = await gql.getOfficialPassword(email);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: resp,
         });
     });
+
+module.exports = router
