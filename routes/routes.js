@@ -52,10 +52,34 @@ router.route('/getUser')
         });
     });
 
+router.route('/getUserByEmail')
+    .post(async (req, res) => {
+        
+        let { email } = req.body;
+
+        if(!(data)) {
+            return res.json({
+                error:'invalid request',
+                success: false,
+                response: false,
+            });
+        }
+
+        // Processing
+        
+        return res.json({
+            error: false,
+            success: true,
+            response: {
+                "message": "response",
+            },
+        });
+    });
+
 router.route('/getUserPassword')
     .post(async (req, res) => {
         
-        let { data } = req.body;
+        let { email } = req.body;
 
         if(!(data)) {
             return res.json({
@@ -79,7 +103,7 @@ router.route('/getUserPassword')
 router.route('/insertProblem')
     .post(async (req, res) => {
         
-        let { description, title, areaid, userid } = req.body;
+        let { areaid, department, image_url, description, title, areaid, userid } = req.body;
 
         if(!(data)) {
             return res.json({
@@ -289,6 +313,8 @@ router.route('/digiSignProblem')
             },
         });
     });
+
+// Government
 
 router.route('/insertOfficial')
     .post(async (req, res) => {
