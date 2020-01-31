@@ -19,12 +19,12 @@ router.route('/insertUser')
         }
 
         // Processing
-        let res = await gql.insertUser(phoneNumber, password, name, email, area);
+        let resp = await gql.insertUser(phoneNumber, password, name, email, area);
 
         return res.json({
             error: false,
             success: true,
-            response: res,
+            response: resp,
         });
     });
 
@@ -42,12 +42,12 @@ router.route('/getUserByEmail')
         }
 
         // Processing
-        let res = await gql.getUserByEmail(email);
+        let resp = await gql.getUserByEmail(email);
         
         return res.json({
             error: false,
             success: true,
-            response: res,
+            response: resp,
         });
     });
 
@@ -65,12 +65,12 @@ router.route('/getUserPassword')
         }
 
         // Processing
-        let res = await gql.getUserPassword(email);
+        let resp = await gql.getUserPassword(email);
         
         return res.json({
             error: false,
             success: true,
-            response: res,
+            response: resp,
         });
     });
 
@@ -79,9 +79,9 @@ router.route('/getUserPassword')
 router.route('/insertProblem')
     .post(async (req, res) => {
         
-        let { areaid, department, image_url, description, title, areaid, userid } = req.body;
+        let { areaid, department, image_url, description, title, userid } = req.body;
 
-        if(!(areaid && department && image_url && description && title && areaid && userid)) {
+        if(!(areaid && department && image_url && description && title && userid)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -90,12 +90,12 @@ router.route('/insertProblem')
         }
 
         // Processing
-        let res = await gql.insertProblem(areaid, department, image_url, description, title, areaid, userid);
+        let resp = await gql.insertProblem(areaid, department, image_url, description, title, areaid, userid);
         
         return res.json({
             error: false,
             success: true,
-            response: res,
+            response: resp,
         });
     });
 
@@ -103,12 +103,12 @@ router.route('/getProblem')
     .post(async (req, res) => {
         
         // Processing
-        let res = await gql.getProblem();
+        let resp = await gql.getProblem();
         
         return res.json({
             error: false,
             success: true,
-            response: res,
+            response: resp,
         });
     });
 
@@ -126,12 +126,12 @@ router.route('/getProblemByAreaID')
         }
 
         // Processing
-        let res = await gql.getProblemByAreaID(areaid);
+        let resp = await gql.getProblemByAreaID(areaid);
         
         return res.json({
             error: false,
             success: true,
-            response: res,
+            response: resp,
         });
     });
 
@@ -149,7 +149,7 @@ router.route('/getProblemByUser')
         }
 
         // Processing
-        let res = await gql.getProblemByUser(userid);
+        let resp = await gql.getProblemByUser(userid);
         
         return res.json({
             error: false,
@@ -174,12 +174,12 @@ router.route('/getProblemByDepartent')
         }
 
         // Processing
-        let res = await gql.getProblemByDepartent(department);
+        let resp = await gql.getProblemByDepartent(department);
         
         return res.json({
             error: false,
             success: true,
-            response: res,
+            response: resp,
         });
     });
 
@@ -198,12 +198,12 @@ router.route('/upvoteProblem')
 
         // Processing
         let upvotes = await gql.fetchUpvoteProblem(problemid);
-        let res = await gql.upvoteProblem(problemid, upvotes+1);
+        let resp = await gql.upvoteProblem(problemid, upvotes+1);
         
         return res.json({
             error: false,
             success: true,
-            response: res,
+            response: resp,
         });
     });
 
@@ -222,12 +222,12 @@ router.route('/downvoteProblem')
 
         // Processing
         let downvotes = await gql.fetchDownvoteProblem(problemid);
-        let res = await gql.downvoteProblem(problemid, downvotes+1);
+        let resp = await gql.downvoteProblem(problemid, downvotes+1);
         
         return res.json({
             error: false,
             success: true,
-            response: res,
+            response: resp,
         });
     });
 
@@ -295,12 +295,12 @@ router.route('/insertOfficial')
         }
 
         // Processing
-        let res = await gql.insertOfficial(name, password, email, phone, department, area);
+        let resp = await gql.insertOfficial(name, password, email, phone, department, area);
         
         return res.json({
             error: false,
             success: true,
-            response: res,
+            response: resp,
         });
     });
 
@@ -318,11 +318,13 @@ router.route('/getOfficialPassword')
         }
 
         // Processing
-        let res = await gql.getOfficialPassword(email);
+        let resp = await gql.getOfficialPassword(email);
         
         return res.json({
             error: false,
             success: true,
-            response: res,
+            response: resp,
         });
     });
+
+module.exports = router

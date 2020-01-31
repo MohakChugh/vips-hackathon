@@ -68,7 +68,7 @@ const getUserPassword = async (email) => {
     return result
 };
 
-const insertProblem = async (areaid, department, image_url, description, title, areaid, userid) => {
+const insertProblem = async (areaid, department, image_url, description, title, userid) => {
     const client = new GraphQLClient('', {
         headers: {
             'content-type': 'application/json',
