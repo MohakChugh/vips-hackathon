@@ -5,18 +5,18 @@ const router = express.Router();
 const bodyparser = require('body-parser');
 
 router.use(bodyparser.json())
-router.use(bodyparser.urlencoded({extended:true}))
+router.use(bodyparser.urlencoded({ extended: true }))
 // Users API Route
 
 router.route('/insertUser')
     .post(async (req, res) => {
-        
+
         // get data
-        let  { phoneNumber, password, name, email, area } = req.body;
-        
-        if(!(phoneNumber && password && name && email && area)) {
+        let { phoneNumber, password, name, email, area } = req.body;
+
+        if (!(phoneNumber && password && name && email && area)) {
             return res.json({
-                error:'invalid request',
+                error: 'invalid request',
                 success: false,
                 response: false,
             });
@@ -33,12 +33,12 @@ router.route('/insertUser')
 
 router.route('/getUserByEmail')
     .post(async (req, res) => {
-        
+
         let { email } = req.body;
 
-        if(!(email)) {
+        if (!(email)) {
             return res.json({
-                error:'invalid request',
+                error: 'invalid request',
                 success: false,
                 response: false,
             });
@@ -46,7 +46,7 @@ router.route('/getUserByEmail')
 
         // Processing
         let resp = await gql.getUserByEmail(email);
-        
+
         return res.json({
             error: false,
             success: true,
@@ -56,12 +56,12 @@ router.route('/getUserByEmail')
 
 router.route('/getUserPassword')
     .post(async (req, res) => {
-        
+
         let { email } = req.body;
 
-        if(!(email)) {
+        if (!(email)) {
             return res.json({
-                error:'invalid request',
+                error: 'invalid request',
                 success: false,
                 response: false,
             });
@@ -69,7 +69,7 @@ router.route('/getUserPassword')
 
         // Processing
         let resp = await gql.getUserPassword(email);
-        
+
         return res.json({
             error: false,
             success: true,
@@ -81,12 +81,12 @@ router.route('/getUserPassword')
 
 router.route('/insertProblem')
     .post(async (req, res) => {
-        
+
         let { areaid, department, image_url, description, title, userid } = req.body;
 
-        if(!(areaid && department && image_url && description && title && userid)) {
+        if (!(areaid && department && image_url && description && title && userid)) {
             return res.json({
-                error:'invalid request',
+                error: 'invalid request',
                 success: false,
                 response: false,
             });
@@ -94,7 +94,7 @@ router.route('/insertProblem')
 
         // Processing
         let resp = await gql.insertProblem(areaid, department, image_url, description, title, userid);
-        
+
         return res.json({
             error: false,
             success: true,
@@ -104,10 +104,10 @@ router.route('/insertProblem')
 
 router.route('/getProblem')
     .get(async (req, res) => {
-        
+
         // Processing
         let resp = await gql.getProblem();
-        
+
         return res.json({
             error: false,
             success: true,
@@ -117,12 +117,12 @@ router.route('/getProblem')
 
 router.route('/getProblemByAreaID')
     .post(async (req, res) => {
-        
+
         let { areaid } = req.body;
-        
-        if(!(areaid)) {
+
+        if (!(areaid)) {
             return res.json({
-                error:'invalid request',
+                error: 'invalid request',
                 success: false,
                 response: false,
             });
@@ -130,7 +130,7 @@ router.route('/getProblemByAreaID')
 
         // Processing
         let resp = await gql.getProblemByAreaID(areaid);
-        
+
         return res.json({
             error: false,
             success: true,
@@ -140,12 +140,12 @@ router.route('/getProblemByAreaID')
 
 router.route('/getProblemByUser')
     .post(async (req, res) => {
-        
+
         let { userid } = req.body;
-        
-        if(!(userid)) {
+
+        if (!(userid)) {
             return res.json({
-                error:'invalid request',
+                error: 'invalid request',
                 success: false,
                 response: false,
             });
@@ -153,7 +153,7 @@ router.route('/getProblemByUser')
 
         // Processing
         let resp = await gql.getProblemByUser(userid);
-        
+
         return res.json({
             error: false,
             success: true,
@@ -163,12 +163,12 @@ router.route('/getProblemByUser')
 
 router.route('/getProblemByDepartent')
     .post(async (req, res) => {
-        
+
         let { department } = req.body;
-        
-        if(!(department)) {
+
+        if (!(department)) {
             return res.json({
-                error:'invalid request',
+                error: 'invalid request',
                 success: false,
                 response: false,
             });
@@ -176,7 +176,7 @@ router.route('/getProblemByDepartent')
 
         // Processing
         let resp = await gql.getProblemByDepartent(department);
-        
+
         return res.json({
             error: false,
             success: true,
@@ -186,12 +186,12 @@ router.route('/getProblemByDepartent')
 
 router.route('/upvoteProblem')
     .post(async (req, res) => {
-        
+
         let { problemid } = req.body;
-        
-        if(!(problemid)) {
+
+        if (!(problemid)) {
             return res.json({
-                error:'invalid request',
+                error: 'invalid request',
                 success: false,
                 response: false,
             });
@@ -200,8 +200,8 @@ router.route('/upvoteProblem')
         // Processing
         let upvotes = await gql.fetchUpvoteProblem(parseInt(problemid));
         let resp = [];
-        if(upvotes.problems) {
-            resp = await gql.upvoteProblem(problemid, upvotes.problems[0].upvote+1);
+        if (upvotes.problems) {
+            resp = await gql.upvoteProblem(problemid, upvotes.problems[0].upvote + 1);
         }
 
         return res.json({
@@ -213,12 +213,12 @@ router.route('/upvoteProblem')
 
 router.route('/downvoteProblem')
     .post(async (req, res) => {
-        
+
         let { problemid } = req.body;
-        
-        if(!(problemid)) {
+
+        if (!(problemid)) {
             return res.json({
-                error:'invalid request',
+                error: 'invalid request',
                 success: false,
                 response: false,
             });
@@ -228,10 +228,10 @@ router.route('/downvoteProblem')
         let downvotes = await gql.fetchDownvoteProblem(parseInt(problemid));
         console.log(downvotes)
         let resp = [];
-        if(downvotes.problems) {
-            resp = await gql.downvoteProblem(problemid, downvotes.problems[0].downvote+1);
+        if (downvotes.problems) {
+            resp = await gql.downvoteProblem(problemid, downvotes.problems[0].downvote + 1);
         }
-        
+
         return res.json({
             error: false,
             success: true,
@@ -241,19 +241,19 @@ router.route('/downvoteProblem')
 
 router.route('/deleteProblem')
     .post(async (req, res) => {
-        
+
         let { problemid } = req.body;
-        
-        if(!(data)) {
+
+        if (!(data)) {
             return res.json({
-                error:'invalid request',
+                error: 'invalid request',
                 success: false,
                 response: false,
             });
         }
 
         // Processing
-        
+
         return res.json({
             error: false,
             success: true,
@@ -265,12 +265,12 @@ router.route('/deleteProblem')
 
 router.route('/digiSignProblem')
     .post(async (req, res) => {
-        
+
         let { problemid, userid } = req.body;
-        
-        if(!(problemid && userid)) {
+
+        if (!(problemid && userid)) {
             return res.json({
-                error:'invalid request',
+                error: 'invalid request',
                 success: false,
                 response: false,
             });
@@ -279,8 +279,8 @@ router.route('/digiSignProblem')
         // Processing
         let digitalsign = await digitalSignature.digitalSignature(problemid, userid);
         let resp = await gql.insertDigitalSignatures(digitalsign);
-        
-        if(!resp) {
+
+        if (!resp) {
             return res.json({
                 error: true,
                 success: false,
@@ -299,12 +299,12 @@ router.route('/digiSignProblem')
 
 router.route('/insertOfficial')
     .post(async (req, res) => {
-        
+
         let { name, password, email, phone, department, areaid } = req.body;
-        
-        if(!(name, password, email, phone, department, areaid)) {
+
+        if (!(name, password, email, phone, department, areaid)) {
             return res.json({
-                error:'invalid request',
+                error: 'invalid request',
                 success: false,
                 response: false,
             });
@@ -312,7 +312,7 @@ router.route('/insertOfficial')
 
         // Processing
         let resp = await gql.insertOfficial(name, password, email, phone, department, areaid);
-        
+
         return res.json({
             error: false,
             success: true,
@@ -322,12 +322,12 @@ router.route('/insertOfficial')
 
 router.route('/digiSignProblem')
     .post(async (req, res) => {
-        
+
         let { problemid, userid } = req.body;
-        
-        if(!(problemid && userid)) {
+
+        if (!(problemid && userid)) {
             return res.json({
-                error:'invalid request',
+                error: 'invalid request',
                 success: false,
                 response: false,
             });
@@ -336,8 +336,8 @@ router.route('/digiSignProblem')
         // Processing
         let digitalsign = await digitalSignature.digitalSignature(problemid, userid);
         let resp = await gql.insertDigitalSignatures(digitalsign, userid, problemid);
-        
-        if(!resp) {
+
+        if (!resp) {
             return res.json({
                 error: true,
                 success: false,
@@ -354,12 +354,12 @@ router.route('/digiSignProblem')
 
 router.route('/verifyDigiSign')
     .post(async (req, res) => {
-        
+
         let { signature, problemid, userid } = req.body;
-        
-        if(!(signature && problemid && userid)) {
+
+        if (!(signature && problemid && userid)) {
             return res.json({
-                error:'invalid request',
+                error: 'invalid request',
                 success: false,
                 response: false,
             });
@@ -367,8 +367,8 @@ router.route('/verifyDigiSign')
 
         // Processing
         let resp = await digitalSignature.verifyDigitalSignature(signature, problemid, userid);
-        
-        if(!resp) {
+
+        if (!resp) {
             return res.json({
                 error: true,
                 success: false,
@@ -387,12 +387,12 @@ router.route('/verifyDigiSign')
 
 router.route('/insertOfficial')
     .post(async (req, res) => {
-        
+
         let { name, password, email, phone, department, areaid } = req.body;
-        
-        if(!(name, password, email, phone, department, areaid)) {
+
+        if (!(name, password, email, phone, department, areaid)) {
             return res.json({
-                error:'invalid request',
+                error: 'invalid request',
                 success: false,
                 response: false,
             });
@@ -400,7 +400,7 @@ router.route('/insertOfficial')
 
         // Processing
         let resp = await gql.insertOfficial(name, password, email, phone, department, areaid);
-        
+
         return res.json({
             error: false,
             success: true,
@@ -410,12 +410,12 @@ router.route('/insertOfficial')
 
 router.route('/getOfficialPassword')
     .post(async (req, res) => {
-        
+
         let { email } = req.body;
-        
-        if(!(email)) {
+
+        if (!(email)) {
             return res.json({
-                error:'invalid request',
+                error: 'invalid request',
                 success: false,
                 response: false,
             });
@@ -423,7 +423,7 @@ router.route('/getOfficialPassword')
 
         // Processing
         let resp = await gql.getOfficialPassword(email);
-        
+
         return res.json({
             error: false,
             success: true,
@@ -433,12 +433,12 @@ router.route('/getOfficialPassword')
 
 router.route('/getOfficialByArea')
     .post(async (req, res) => {
-        
+
         let { areaid } = req.body;
-        
-        if(!(areaid)) {
+
+        if (!(areaid)) {
             return res.json({
-                error:'invalid request',
+                error: 'invalid request',
                 success: false,
                 response: false,
             });
@@ -446,7 +446,7 @@ router.route('/getOfficialByArea')
 
         // Processing
         let resp = await gql.getOfficialByArea(areaid);
-        
+
         return res.json({
             error: false,
             success: true,
