@@ -1,9 +1,10 @@
+// @ts-check
 var Twit = require('twit');
 const gql = require("../database/queries");
 const config = require('../config/config');
 
 function twitter () {
-    console.log("Listening for tweets hashtag => #CitizensAppMakeathon");
+    console.log("Listening for tweets hashtag => #CitizensApp");
 
     var T = new Twit({
         consumer_key:         config.consumer_key,
@@ -14,7 +15,8 @@ function twitter () {
         strictSSL:            true,
     });
 
-    var stream = T.stream('statuses/filter', { track: '#CitizensAppMakeathon', language: 'en' });
+    var stream = T.stream('statuses/filter', { track: '#CitizensApp' });
+    console.log(stream)
     stream.on('tweet', function (tweet) {
         var info = {
             origin: tweet.created_at,
@@ -25,12 +27,14 @@ function twitter () {
             title: tweet.text.match(/^Title\:(.)*$/gm)[0].split(":")[1]
         };
 
-        (async() => {
+        let func = async () => {
             let data = await cacheTweet(info);
             console.log(data);
-        })().catch(function(err){
-            console.log(err);
-        });
+        }
+        func()
+            // }.catch(function(err){
+        //     console.log(err);
+        // });
     });
 }
 
