@@ -332,20 +332,6 @@ const deleteProblem = async (problemid) => {
     return result
 };
 
-const digiSignProblem = async (problemid) => {
-    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
-        headers: {
-            'content-type': 'application/json',
-        },
-    })
-    const query = ``
-    
-    let result = await client.request(query)
-        .then(data => { return data })
-        .catch((err) => { return err })
-    return result
-};
-
 const insertOfficial = async (name, password, email, phone, department, areaid) => {
     const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
         headers: {
@@ -446,7 +432,6 @@ exports.fetchUpvoteProblem = fetchUpvoteProblem
 exports.downvoteProblem = downvoteProblem
 exports.fetchDownvoteProblem = fetchDownvoteProblem
 exports.deleteProblem = deleteProblem
-exports.digiSignProblem = digiSignProblem
 exports.insertOfficial = insertOfficial
 exports.getOfficialPassword = getOfficialPassword
 exports.getAllAreasInfo = getAllAreasInfo
