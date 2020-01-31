@@ -7,7 +7,7 @@ router.route('/insertUser')
     .post(async (req, res) => {
         
         // get data
-        let  { data } = req.body;
+        let  { phoneNumber, password, name, email, area } = req.body;
         
         if(!(data)) {
             return res.json({
@@ -31,6 +31,32 @@ router.route('/insertUser')
 router.route('/getUser')
     .post(async (req, res) => {
         
+        let { email } = req.body;
+
+        if(!(data)) {
+            return res.json({
+                error:'invalid request',
+                success: false,
+                response: false,
+            });
+        }
+
+        // Processing
+        
+        return res.json({
+            error: false,
+            success: true,
+            response: {
+                "message": "response",
+            },
+        });
+    });
+
+router.route('/getUserPassword')
+    .post(async (req, res) => {
+        
+        let { data } = req.body;
+
         if(!(data)) {
             return res.json({
                 error:'invalid request',
