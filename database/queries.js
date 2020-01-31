@@ -327,13 +327,25 @@ const digiSignProblem = async (problemid) => {
 };
 
 
-const insertOfficial = async (name, password, email, phone, department, area) => {
+const insertOfficial = async (areaid, name, password, email, phone, department, departmentId) => {
     const client = new GraphQLClient('', {
         headers: {
             'content-type': 'application/json',
         },
     })
-    const query = ``
+    const query = `mutation MyMutation {
+        __typename
+        insert_govtOfficials(objects: {
+            areaid: "${areaid}", 
+            department: "${department}", 
+            departmentId: "${departmentId}", 
+            email: "${email}", 
+            name: "${name}", 
+            password: "${password}", 
+            phone: "${phone}"}) {
+                affected_rows
+        }
+    }`
     
     let result = await client.request(query)
         .then(data => { return data })
