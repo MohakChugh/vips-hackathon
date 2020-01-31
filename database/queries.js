@@ -326,8 +326,7 @@ const digiSignProblem = async (problemid) => {
     return result
 };
 
-
-const insertOfficial = async (areaid, name, password, email, phone, department, departmentId) => {
+const insertOfficial = async (areaid, name, password, email, phone, department) => {
     const client = new GraphQLClient('', {
         headers: {
             'content-type': 'application/json',
@@ -338,7 +337,6 @@ const insertOfficial = async (areaid, name, password, email, phone, department, 
         insert_govtOfficials(objects: {
             areaid: "${areaid}", 
             department: "${department}", 
-            departmentId: "${departmentId}", 
             email: "${email}", 
             name: "${name}", 
             password: "${password}", 
@@ -359,7 +357,12 @@ const getOfficialPassword = async (email) => {
             'content-type': 'application/json',
         },
     })
-    const query = ``
+    const query = `query MyQuery {
+        __typename
+        govtOfficials(where: {email: {_eq: ""}}) {
+            password
+        }
+    }`
     
     let result = await client.request(query)
         .then(data => { return data })
