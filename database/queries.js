@@ -157,13 +157,29 @@ const getProblemByAreaID = async (areaid) => {
     return result
 };
 
-const getProblemByUser = async (email) => {
+const getProblemByUser = async (userid) => {
     const client = new GraphQLClient('', {
         headers: {
             'content-type': 'application/json',
         },
     })
-    const query = ``
+    const query = `query MyQuery {
+        problems(where: {citizen_id: {_eq: "${userid}"}}) {
+            areaid
+            citizen_id
+            department
+            description
+            downvote
+            digiSignature_Count
+            id
+            image_url
+            originTime
+            resolveTime
+            status
+            title
+            upvote
+        }
+    }`
     
     let result = await client.request(query)
         .then(data => { return data })
