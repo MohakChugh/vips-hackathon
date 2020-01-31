@@ -12,10 +12,10 @@ function twitter () {
         access_token:         "1114549401475633152-mWUjARjPA0FL6yfchcTxd9Es5c8n87",
         access_token_secret:  "TjOK9jTyXT4KRnEvLUxyxxJZoTwO9iYOAvqIygMCNGUlA",
         timeout_ms:           60*1000,
-        strictSSL:            false,
+        strictSSL:            true,
     });
 
-    var stream = T.stream('statuses/filter', { track: '#CitizensApp' });
+    var stream = T.stream('statuses/filter', { track: '#adisakshya' });
     console.log(stream)
     stream.on('tweet', function (tweet) {
         var info = {
@@ -38,16 +38,18 @@ function twitter () {
     });
 }
 
-function cacheTweet (tweetInfo) {
+function cacheTweet(tweetInfo) {
+    console.log(tweetInfo)
     return new Promise(async (resolve, reject) => {
         if (tweetInfo.origin && tweetInfo.description && tweetInfo.area && tweetInfo.department && tweetInfo.email && tweetInfo.title) {
             
             // user -> unknown
-            var cid = 'c7fb4953-2596-4f4b-84a5-4a00463af249';
+            var cid = 0;
             
-            var aid = -1;
+            var aid = 0;
             var image_url = '';
             var res = await gql.insertProblem(aid, tweetInfo.department, image_url, tweetInfo.description, tweetInfo.title, cid);
+            console.log(res)
             resolve("Tweet Inserted in DB");
         } else {
             reject("Invalid Tweet !");
