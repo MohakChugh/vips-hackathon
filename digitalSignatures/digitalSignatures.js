@@ -11,14 +11,12 @@ const digitalSignature = async (problemid, userid) => {
     // hex is encrypted and saved in encryptedhex
     encryptedHex = await bcrypt.hash(hex, salt)
         .then(async hash => {
-            console.log(hash)
             encryptedHex = hash
             return encryptedHex
         })
     
     // encryptedhex is signed
     let digitalSign = jwt.sign({ encryptedHex }, config.EncryptionSecretKey)
-    console.log(digitalSign)
 
     // encrypted hex is returned
     return digitalSign
@@ -31,14 +29,12 @@ const verifyDigitalSignature = async (signature, problemid, userid) => {
     let hex = problemid.toString() + userid.toString()
 
     decodedstring = await jwt.verify(signature, config.EncryptionSecretKey, (err, dec) => {
-        console.log(dec.encryptedHex)
         decodedstring = dec.encryptedHex
         return decodedstring
     });
     // decoded stores encrypted value
 
     let isVerified = await bcrypt.compare(hex, decodedstring)
-    console.log(isVerified)
     return isVerified
 }
 // main = async () => {

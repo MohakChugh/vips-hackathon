@@ -1,7 +1,8 @@
-const gql = require('../database/queries')
-const express = require('express')
+const gql = require('../database/queries');
+const digitalSignature = require('../digitalSignatures/digitalSignatures');
+const express = require('express');
 const router = express.Router();
-const bodyparser = require('body-parser')
+const bodyparser = require('body-parser');
 
 router.use(bodyparser.json())
 router.use(bodyparser.urlencoded({extended:true}))
@@ -265,9 +266,9 @@ router.route('/deleteProblem')
 router.route('/digiSignProblem')
     .post(async (req, res) => {
         
-        let { problemid } = req.body;
+        let { problemid, userid } = req.body;
         
-        if(!(data)) {
+        if(!(problemid && userid)) {
             return res.json({
                 error:'invalid request',
                 success: false,
@@ -276,13 +277,109 @@ router.route('/digiSignProblem')
         }
 
         // Processing
+        let digitalsign = await digitalSignature.digitalSignature(problemid, userid);
+        let resp = await gql.digiSignProblem(digitalsign);
+        
+        if(!resp) {
+            return res.json({
+                error: true,
+                success: false,
+                response: null,
+            });
+        }
+
+        return res.json({
+            error: false,
+            success: true,
+            response: "digitally signed",
+        });
+    });
+
+// Government
+
+router.route('/insertOfficial')
+    .post(async (req, res) => {
+        
+        let { name, password, email, phone, department, areaid } = req.body;
+        
+        if(!(name, password, email, phone, department, areaid)) {
+            return res.json({
+                error:'invalid request',
+                success: false,
+                response: false,
+            });
+        }
+
+        // Processing
+        let resp = await gql.insertOfficial(name, password, email, phone, department, areaid);
         
         return res.json({
             error: false,
             success: true,
-            response: {
-                "message": "response",
-            },
+            response: resp,
+        });
+    });
+
+router.route('/digiSignProblem')
+    .post(async (req, res) => {
+        
+        let { problemid, userid } = req.body;
+        
+        if(!(problemid && userid)) {
+            return res.json({
+                error:'invalid request',
+                success: false,
+                response: false,
+            });
+        }
+
+        // Processing
+        let digitalsign = await digitalSignature.digitalSignature(problemid, userid);
+        let resp = await gql.digiSignProblem(digitalsign);
+        
+        if(!resp) {
+            return res.json({
+                error: true,
+                success: false,
+                response: null,
+            });
+        }
+
+        return res.json({
+            error: false,
+            success: true,
+            response: "digitally signed",
+        });
+    });
+
+router.route('/verifyDigiSign')
+    .post(async (req, res) => {
+        
+        let { signature, problemid, userid } = req.body;
+        
+        if(!(signature && problemid && userid)) {
+            return res.json({
+                error:'invalid request',
+                success: false,
+                response: false,
+            });
+        }
+
+        // Processing
+        let resp = await digitalSignature.verifyDigitalSignature(signature, problemid, userid);
+        
+        if(!resp) {
+            return res.json({
+                error: true,
+                success: false,
+                response: null,
+            });
+        }
+
+        return res.json({
+            error: false,
+            success: true,
+            response: "digitally verified",
         });
     });
 
