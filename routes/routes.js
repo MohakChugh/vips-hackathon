@@ -4,7 +4,7 @@ const router = express.Router();
 const bodyparser = require('body-parser')
 
 router.use(bodyparser.json())
-
+router.use(bodyparser.urlencoded({extended:true}))
 // Users API Route
 
 router.route('/insertUser')
