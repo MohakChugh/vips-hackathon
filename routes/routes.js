@@ -242,7 +242,8 @@ router.route('/digiSignProblem')
         }
         // Processing
         let digitalsign = await digitalSignature.digitalSignature(problemid, userid);
-        let resp = await gql.insertDigitalSignatures(digitalsign);
+        let resp = await gql.insertDigitalSignatures(problemid, userid, digitalsign);
+        console.log(resp)
         if (!resp) {
             return res.json({
                 error: true,
