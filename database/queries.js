@@ -445,6 +445,25 @@ const insertDigitalSignatures = async (problemID, userID, signature) => {
     return result
 };
 
+const increaseDigitalSignature = async (problemID, incrementedDigiCount) => {
+    const client = new GraphQLClient('https://vips-citizenapp-database.herokuapp.com/v1/graphql', {
+        headers: {
+            'content-type': 'application/json',
+        },
+    })
+    const query = `mutation MyMutation {
+        __typename
+        update_problems(where: {id: {_eq: "${problemID}"}}, _set: {digiSignature_Count: "${incrementedDigiCount}"}) {
+            affected_rows
+        }
+    }`
+    
+    let result = await client.request(query)
+        .then(data => { return data })
+        .catch((err) => { return err })
+    return result
+};
+
 exports.insertUser = insertUser
 exports.getUserByEmail = getUserByEmail
 exports.getUserPassword = getUserPassword
@@ -464,3 +483,4 @@ exports.getAllAreasInfo = getAllAreasInfo
 exports.getOfficialByArea = getOfficialByArea
 exports.insertDigitalSignatures = insertDigitalSignatures
 exports.getUserById = getUserById
+exports.increaseDigitalSignature = increaseDigitalSignature
