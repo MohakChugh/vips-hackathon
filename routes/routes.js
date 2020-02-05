@@ -46,15 +46,12 @@ router.route('/deleteProblem')
 router.route('/digiSignProblem')
     .post(controller.digiSignProblem);
 
+router.route('/verifyDigiSign')
+    .post(controller.verifyDigiSign);
 // Government
 
 router.route('/insertOfficial')
     .post(controller.insertOfficial);
-
-router.route('/verifyDigiSign')
-    .post(controller.verifyDigiSign);
-
-// Government
 
 router.route('/getOfficialPassword')
     .post(controller.getOfficialPassword);
