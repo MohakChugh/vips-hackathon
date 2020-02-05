@@ -37,13 +37,6 @@ const verifyDigitalSignature = async (signature, problemid, userid) => {
     let isVerified = await bcrypt.compare(hex, decodedstring)
     return isVerified
 }
-// main = async () => {
-
-//     let sig = await digitalSignature(123456, 23456)
-//     console.log(await verifyDigitalSignature("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbmNyeXB0ZWRIZXgiOiIkMmIkMTAkMjBxLllaa1ZiRXFrYjBFd0dhbU5tLkVUalY1Ynp0Z25ZOUlQRGRwcjJXNmRtSmo2Lm9BWU8iLCJpYXQiOjE1ODA0NzUyMzB9.uwJi8oFSxbYtYWq1VaxLM2HzRZbEg2xTjyOy69zdfgh", 123456, 23456))
-    
-// }
-// main()
 
 exports.verifyDigitalSignature = verifyDigitalSignature
 exports.digitalSignature = digitalSignature
